@@ -6,7 +6,6 @@ feature 'delete bookmark' do
 
   scenario "should delete Bookmark" do
     connection = PG.connect(dbname: 'bookmark_manager_test')
-    connection.exec("INSERT INTO bookmarks (url) VALUES ('www.imgur.com');")
     connection.exec("INSERT INTO bookmarks (url) VALUES ('http://www.google.com');")
     visit "/delete_bookmarks"
     fill_in :url, with: 'wwww.imgur.com'
