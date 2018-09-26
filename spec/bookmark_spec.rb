@@ -17,21 +17,27 @@ describe Bookmark do
 
   context ".create" do
     it "should add a new bookmark to database" do
-      Bookmark.create("www.imgur.com")
+      Bookmark.create("http://www.imgur.com")
 
-      expect(Bookmark.all).to include "www.imgur.com"
+      expect(Bookmark.all).to include "http://www.imgur.com"
     end
+    it "should reject fake urls" do
+      Bookmark.create("gobbledy-gook")
+
+      expect(Bookmark.all).not_to include "gobbledy-gook"
+    end
+
   end
 
-  context ".create" do
+  context ".delete" do
     it "should add a new bookmark to database" do
-      Bookmark.create("www.imgur.com")
+      Bookmark.create("http://www.imgur.com")
 
-      expect(Bookmark.all).to include "www.imgur.com"
+      expect(Bookmark.all).to include "http://www.imgur.com"
 
-      Bookmark.delete("www.imgur.com")
+      Bookmark.delete("http://www.imgur.com")
 
-      expect(Bookmark.all).not_to include "www.imgur.com"
+      expect(Bookmark.all).not_to include "http://www.imgur.com"
 
     end
   end

@@ -1,7 +1,11 @@
 require 'sinatra/base'
+require 'sinatra/flash'
 require_relative './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
+
+  enable :sessions
+  register Sinatra::Flash
 
   get '/' do
     #form - add bookmarks and view bookmarks
@@ -18,7 +22,8 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/adder' do
-    Bookmark.create(params[:bookmark])
+    string = "Not a real string"
+    flash[:error] = string unless Bookmark.create(params[:bookmark])
     redirect '/bookmarks'
   end
 

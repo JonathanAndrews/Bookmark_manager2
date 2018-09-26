@@ -3,7 +3,7 @@ require 'pg'
 class Bookmark
 
   def self.all
-    if ENV['ENVIRONMENT'] = 'test'
+    if ENV['ENVIRONMENT'] == 'test'
       con = PG.connect dbname: 'bookmark_manager_test'
     else
       con = PG.connect dbname: 'bookmark_manager'
@@ -17,6 +17,8 @@ class Bookmark
   end
 
   def self.create(url)
+
+    return false unless is_url?(url)
 
     if ENV['ENVIRONMENT'] = 'test'
       con = PG.connect dbname: 'bookmark_manager_test'
@@ -38,5 +40,11 @@ class Bookmark
     string = "DELETE FROM bookmarks WHERE url = '" + url + "';"
     con.exec(string)
 
+  end
+
+  private
+
+  def self.is_url?(url)
+    url =~ /\A#{URI::regexp(['http', 'https'])}\z/
   end
 end
