@@ -33,8 +33,9 @@ class Bookmark
       con = PG.connect dbname: 'bookmark_manager'
     end
 
-    string = "INSERT INTO bookmarks (url, title) VALUES ('" + url + "', '" + title + "');"
-    con.exec(string)
+    string = "INSERT INTO bookmarks (url, title) VALUES ('" + url + "', '" + title + "') RETURNING id, title, url;"
+    result = con.exec(string)
+    Bookmark.new(result[0]['id'], result[0]['title'], result[0]['url'])
   end
 
   def self.delete(url)

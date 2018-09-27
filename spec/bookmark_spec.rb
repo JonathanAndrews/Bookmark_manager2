@@ -14,10 +14,14 @@ describe Bookmark do
   end
 
   context ".create" do
+    it "should return a bookmark object" do
+      bookmark = Bookmark.create("Imgur", "http://www.imgur.com")
+      expect(bookmark).to be_a Bookmark 
+    end
     it "should add a new bookmark to database" do
       Bookmark.create("Imgur", "http://www.imgur.com")
 
-      expect((Bookmark.all[0]).title).to include "Imgur"
+      expect((Bookmark.all[0]).title).to eq "Imgur"
     end
     it "should reject fake urls" do
       Bookmark.create("gobble", "gobbledy-gook")
