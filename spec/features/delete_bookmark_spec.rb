@@ -1,4 +1,4 @@
-feature 'delete bookmark' do
+xfeature 'delete bookmark' do
   scenario 'should have a delete button' do
     visit('/delete_bookmarks')
     expect(page).to have_content 'Remove!'

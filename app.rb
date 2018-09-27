@@ -23,7 +23,7 @@ class BookmarkManager < Sinatra::Base
 
   post '/adder' do
     string = "Not a real string"
-    flash[:error] = string unless Bookmark.create(params[:bookmark])
+    flash[:error] = string unless Bookmark.create(params[:title], params[:bookmark])
     redirect '/bookmarks'
   end
 
