@@ -4,7 +4,7 @@ require_relative './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
 
-  enable :sessions
+  enable :sessions, :method_override
   register Sinatra::Flash
 
   get '/' do
@@ -18,16 +18,18 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
+    string = "Not a real string"
+    flash[:error] = string unless Bookmark.create(params[:title], params[:bookmark])
     redirect '/bookmarks'
   end
 
-  get '/add_bookmarks' do
+  get '/bookmarks/new' do
     erb :add_bookmark
   end
 
-  post '/adder' do
-    string = "Not a real string"
-    flash[:error] = string unless Bookmark.create(params[:title], params[:bookmark])
+  delete '/bookmarks/:id' do
+    p params
+    Bookmark.delete(params[:id])
     redirect '/bookmarks'
   end
 
@@ -36,7 +38,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/deleter' do
-    Bookmark.delete(params[:url])
+    Bookmark.delete(params["id"])
     redirect '/bookmarks'
   end
 
